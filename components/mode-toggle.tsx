@@ -17,11 +17,14 @@ export const ModeToggle = () => {
     setTheme(resolvedTheme === "light" ? "dark" : "light");
   };
 
-  
   if (!mounted) return null;
   return (
-    <div onClick={handleToggle} className="w-20 h-20 rounded-full cursor-pointer">
-      {resolvedTheme === "light" ? <Moon /> : <Sun />}
+    <div className="w-20 h-20 rounded-full">
+      {resolvedTheme === "light" ? (
+        <Moon className="cursor-pointer" onClick={handleToggle} />
+      ) : (
+        <Sun className="cursor-pointer" onClick={handleToggle} />
+      )}
     </div>
   );
 };
