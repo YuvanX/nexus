@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 export default async function SignIn() {
   const user = await currentUser();
-  // if(user) redirect('/dashboard')
+  if(user) redirect('/dashboard')
 
   return (
     <div className="h-screen relative">
