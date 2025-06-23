@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,59 +14,179 @@ import { FaGoogle } from "react-icons/fa";
 import { IoLogoGithub } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { useSignIn, useSignUp } from "@clerk/nextjs";
+import { Loader } from "./spinner";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "./ui/input-otp";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
+  const [pendingVerification, setPendingVerification] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const { isLoaded, signIn, setActive: setSignInActive } = useSignIn();
+  const { signUp, setActive: setSignUpActive } = useSignUp();
   const router = useRouter();
 
+  if (!isLoaded) return <Loader />;
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    try {
+      await signIn?.create({ identifier: email });
+      await signIn?.prepareFirstFactor({
+        strategy: "email_code",
+        emailAddressId: email,
+      });
+      setPendingVerification(true);
+    } catch (error: any) {
+      if (error.errors[0].code === "form_identifier_not_found") {
+        await signUp?.create({ emailAddress: email });
+        await signUp?.prepareEmailAddressVerification({
+          strategy: "email_code",
+        });
+        setPendingVerification(true);
+      } else if (error.errors[0].code === "form_param_format_invalid") {
+        setError("Invalid Email format. Please enter a valid one.");
+      } else {
+        setError("Something went wrong. Please try again later");
+      }
+    }
+  }
+
+  async function handleVerify(e: React.FormEvent) {
+    e.preventDefault();
+
+    try {
+      if (signIn?.status === "needs_first_factor") {
+        const result = await signIn.attemptFirstFactor({
+          strategy: "email_code",
+          code: verificationCode,
+        });
+
+        await setSignInActive!({ session: result.createdSessionId });
+        router.push("/dashboard");
+      } else if (signUp?.status === "missing_requirements") {
+        const result = await signUp.attemptEmailAddressVerification({
+          code: verificationCode,
+        });
+
+        await setSignUpActive!({ session: result.createdSessionId });
+        router.push("/dashboard");
+      }
+    } catch (error: any) {
+      if (error.errors[0].code === "form_code_incorrect") {
+        setError("Invalid OTP entered. Please enter correct OTP");
+        return;
+      } else if (error.errors[0] === "form_param_invalid_length") {
+        setError("Invalid OTP length. OTP is 6-digit code");
+        return;
+      } else {
+        setError("Something went wrong. Please try again later!");
+      }
+    }
+  }
+
   return (
-    <Card className="min-w-md px-4 !py-10">
-      <CardHeader>
-        <div className="flex justify-center items-center gap-x-2 mb-2">
-          <ArrowLeft size={20} className="text-[#4caf4f]"/>
-          <div className="w-2 h-2 rounded-full bg-[#4caf4f]"></div>
-        </div>
+    <>
+      {!pendingVerification ? (
+        <div>
+          <Card className="min-w-md px-4 !py-10">
+            <CardHeader>
+              <div className="flex justify-center items-center gap-x-2 mb-2">
+                <ArrowLeft size={20} className="text-[#4caf4f]" />
+                <div className="w-2 h-2 rounded-full bg-[#4caf4f]"></div>
+              </div>
 
-        <CardTitle className="uppercase text-3xl text-center">
-          welcome to nexus!
-        </CardTitle>
-        <CardDescription className="text-muted-foreground text-center">
-          Organize your thoughts, ideas, and work—all in one place.
-        </CardDescription>
-      </CardHeader>
+              <CardTitle className="uppercase text-3xl text-center tracking-tighter">
+                welcome to nexus!
+              </CardTitle>
+              <CardDescription className="text-muted-foreground text-center">
+                Organize your thoughts, ideas, and work—all in one place.
+              </CardDescription>
+            </CardHeader>
 
-      <CardContent>
-        <Input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email Address"
-          className="py-6 mt-4"
-        />
+            <CardContent>
+              <Input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email Address"
+                className="py-6 mt-4"
+                required
+              />
 
-        <Button className="w-full font-medium text-sm mt-4 cursor-pointer dark:text-white">
-          Login
-        </Button>
+              <Button
+                onClick={handleSubmit}
+                className="w-full font-medium text-sm mt-4 cursor-pointer dark:text-white"
+              >
+                Login
+              </Button>
 
-        <div className="relative">
-          <Separator className="my-10 relative" />
-          <div className="absolute left-1/2 -translate-1/2 top-0 bg-card px-4 text-muted-foreground text-sm">
-            Or continue with
+              <div className="relative">
+                <Separator className="my-10 relative" />
+                <div className="absolute left-1/2 -translate-1/2 top-0 bg-card px-4 text-muted-foreground text-sm">
+                  Or continue with
+                </div>
+              </div>
+
+              <div className="flex items-center gap-x-4">
+                <Button className="!px-16 !py-2 text-xs cursor-pointer dark:text-white">
+                  <FaGoogle />
+                  Google
+                </Button>
+
+                <Button className="!px-16 !py-2 text-xs cursor-pointer dark:text-white">
+                  <IoLogoGithub />
+                  GitHub
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+          <div className="text-sm mt-5 text-center text-muted-foreground">
+            Secure • Private • Professional
           </div>
         </div>
+      ) : (
+        <Card className="min-w-lg">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl">Verify your Identity</CardTitle>
+            <CardDescription className="text-muted-foreground text-sm">{`An OTP has been sent your email ${email}`}</CardDescription>
+          </CardHeader>
 
-        <div className="flex items-center gap-x-4">
-          <Button className="!px-16 !py-2 text-xs cursor-pointer dark:text-white">
-            <FaGoogle />
-            Google
-          </Button>
+          <CardContent className="flex flex-col items-center">
+            <InputOTP
+              maxLength={6}
+              value={verificationCode}
+              onChange={setVerificationCode}
+            >
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+              </InputOTPGroup>
+              <InputOTPSeparator />
+              <InputOTPGroup>
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
 
-          <Button className="!px-16 !py-2 text-xs cursor-pointer dark:text-white">
-            <IoLogoGithub />
-            GitHub
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+            <Button
+              onClick={handleVerify}
+              className="w-full mt-4 dark:text-white"
+            >
+              Verify
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 };

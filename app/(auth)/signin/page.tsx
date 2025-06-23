@@ -7,11 +7,8 @@ export default function SignIn() {
       <div className="absolute right-0 top-10">
         <ModeToggle />
       </div>
-      <div className="flex flex-col justify-center items-center h-full">
+      <div className="flex justify-center items-center h-full">
         <SignInComponent />
-        <div className="text-sm mt-5 text-muted-foreground">
-            Secure • Private • Professional
-        </div>
       </div>
     </div>
   );
