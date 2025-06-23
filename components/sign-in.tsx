@@ -189,23 +189,23 @@ export const SignIn = () => {
     <>
       <AnimatePresence>
         {!pendingVerification ? (
-          <motion.div
+          <motion.div className="w-full mx-4 max-w-md"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            <Card className="w-full lg:min-w-md px-4 !py-10 mx-4">
+            <Card className="px-2  py-5 md:px-4 md:py-10">
               <CardHeader>
                 <div className="flex justify-center items-center gap-x-2 mb-2">
                   <ArrowLeft size={20} className="text-[#4caf4f]" />
                   <div className="w-2 h-2 rounded-full bg-[#4caf4f]"></div>
                 </div>
 
-                <CardTitle className="uppercase text-3xl text-center tracking-tighter">
+                <CardTitle className="uppercase text-xl md:text-3xl text-center tracking-tighter">
                   welcome to nexus!
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-center">
+                <CardDescription className="text-muted-foreground text-center text-xs lg:text-sm">
                   Organize your thoughts, ideas, and work—all in one place.
                 </CardDescription>
               </CardHeader>
@@ -229,7 +229,7 @@ export const SignIn = () => {
 
                 <div className="relative">
                   <Separator className="my-10 relative" />
-                  <div className="absolute left-1/2 -translate-1/2 top-0 bg-card px-4 text-muted-foreground text-sm">
+                  <div className="absolute left-1/2 -translate-1/2 top-0 bg-card px-4 text-muted-foreground text-xs md:text-sm whitespace-nowrap">
                     Or continue with
                   </div>
                 </div>
@@ -237,7 +237,7 @@ export const SignIn = () => {
                 <div className="flex items-center gap-x-4">
                   <Button
                     onClick={handleGoogleLogin}
-                    className="!px-16 !py-2 text-xs cursor-pointer dark:text-white"
+                    className="w-1/2 !py-2 text-xs cursor-pointer dark:text-white"
                   >
                     <FaGoogle />
                     Google
@@ -245,7 +245,7 @@ export const SignIn = () => {
 
                   <Button
                     onClick={handleGitHubLogin}
-                    className="!px-16 !py-2 text-xs cursor-pointer dark:text-white"
+                    className="w-1/2 !py-2 text-xs cursor-pointer dark:text-white"
                   >
                     <IoLogoGithub />
                     GitHub
