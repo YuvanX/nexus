@@ -27,7 +27,6 @@ export default async function NotePage({ params: { noteId } }: Props) {
     <div>
         <div className="px-10">
             <TipTapEditor/>
-            <Tools />
         </div>
     </div>
   );
