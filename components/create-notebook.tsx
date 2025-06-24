@@ -1,4 +1,3 @@
-import { Plus } from "lucide-react";
 import {
   Dialog,
   DialogDescription,
@@ -6,17 +5,41 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { DialogContent, DialogTitle } from "./ui/dialog";
-import { motion } from "motion/react";
+import axios from "axios"
 import { Input } from "./ui/input";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
+import { useMutation } from "@tanstack/react-query";
 
 export const CreateNoteDialog = () => {
   const [noteName, setNoteName] = useState("");
 
-  function handleSubmit() {
+  const createNote = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post('/api/create', {
+        name: noteName
+      })
+      return response.data
+    }
+  })
 
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
+    if(noteName === '') {
+      window.alert('Please enter a name')
+      return
+    }
+
+    createNote.mutate(undefined, {
+      onSuccess: () => {
+        console.log("created..");
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    })
   }
   return (
     <Dialog>
