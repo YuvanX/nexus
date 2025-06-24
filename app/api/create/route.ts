@@ -26,6 +26,7 @@ export const POST = async (req: NextRequest) => {
             message: "No imageUrl provided"
         }, { status: 500 })
     }
+
     const noteId = await db.insert(notesTable).values({
         userId,
         image: imageUrl,
@@ -35,7 +36,7 @@ export const POST = async (req: NextRequest) => {
     })
 
     return NextResponse.json({
-        noteId,
+        noteId: noteId[0].insertedId,
         message: "Created successfully"
     })
 }
