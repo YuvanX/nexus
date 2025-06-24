@@ -1,9 +1,15 @@
-import { currentUser } from "@clerk/nextjs/server"
-import { redirect } from "next/navigation"
+
+import { AppBar } from "@/components/app-bar";
+import { DashBoardContent } from "@/components/dashboard-content";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export default async function DashBoardPage() {
-    const user = await currentUser()
+  const user = await currentUser();
 
-    if(!user) redirect('/signin')
-    return <div>hi from dashboard <div>{user.createdAt}</div></div>
+  if (!user) redirect("/signin");
+  return <div>
+    <AppBar />
+    <DashBoardContent />
+  </div>;
 }

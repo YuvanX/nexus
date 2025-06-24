@@ -5,11 +5,11 @@ import { redirect } from "next/navigation";
 
 export default async function SignIn() {
   const user = await currentUser();
-  // if(user) redirect('/dashboard')
+  if(user) redirect('/dashboard')
 
   return (
     <div className="h-screen relative">
-      <div className="absolute right-0 top-10">
+      <div className="absolute right-10 top-10">
         <ModeToggle />
       </div>
       <div className="flex justify-center items-center h-full">

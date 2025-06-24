@@ -19,7 +19,7 @@ export const ModeToggle = () => {
 
   if (!mounted) return null;
   return (
-    <div className="w-20 h-20 rounded-full">
+    <div>
       {resolvedTheme === "light" ? (
         <Moon className="cursor-pointer" onClick={handleToggle} />
       ) : (

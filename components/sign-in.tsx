@@ -222,7 +222,7 @@ export const SignIn = () => {
 
                 <Button
                   onClick={handleSubmit}
-                  className="w-full font-medium text-sm mt-4 cursor-pointer dark:text-white"
+                  className="w-full font-medium text-sm mt-4 cursor-pointer "
                 >
                   Login
                 </Button>
@@ -237,7 +237,7 @@ export const SignIn = () => {
                 <div className="flex items-center gap-x-4">
                   <Button
                     onClick={handleGoogleLogin}
-                    className="w-1/2 !py-2 text-xs cursor-pointer dark:text-white"
+                    className="w-1/2 !py-2 text-xs cursor-pointer "
                   >
                     <FaGoogle />
                     Google
@@ -245,7 +245,7 @@ export const SignIn = () => {
 
                   <Button
                     onClick={handleGitHubLogin}
-                    className="w-1/2 !py-2 text-xs cursor-pointer dark:text-white"
+                    className="w-1/2 !py-2 text-xs cursor-pointer "
                   >
                     <IoLogoGithub />
                     GitHub
