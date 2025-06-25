@@ -3,8 +3,16 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
 .tiptap, .ProseMirror {
   outline: none;
+}
+.ProseMirror p.is-empty::before {
+  content: attr(data-placeholder);
+  color: #999;
+  float: left;
+  pointer-events: none;
+  height: 0;
 }
 
 :root {

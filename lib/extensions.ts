@@ -8,7 +8,6 @@ import {
   HighlightExtension,
   HorizontalRule,
   Mathematics,
-  Placeholder,
   StarterKit,
   TaskItem,
   TaskList,
@@ -21,18 +20,20 @@ import {
   UploadImagesPlugin,
   Youtube,
 } from "novel";
-
+import Placeholder from '@tiptap/extension-placeholder'
 import { cx } from "class-variance-authority";
 import { common, createLowlight } from "lowlight";
-
-//TODO I am using cx here to get tailwind autocomplete working, idk if someone else can write a regex to just capture the class key in objects
+import TextAlign from "@tiptap/extension-text-align";
 const aiHighlight = AIHighlight;
-//You can overwrite the placeholder with your own configuration
-const placeholder = Placeholder;
+
+const placeholder = Placeholder.configure({
+  placeholder: "Press '/' for commands"
+});
+
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
     class: cx(
-      "text-muted-foreground underline underline-offset-[3px] hover:text-primary transition-colors cursor-pointer",
+      "text-muted-foreground underline underline-offset-[3px] hover:text-primary transition-colors cursor-pointer"
     ),
   },
 });
@@ -70,6 +71,11 @@ const taskItem = TaskItem.configure({
   nested: true,
 });
 
+const textAlign = TextAlign.configure({
+  types: ["heading", "paragraph"],
+  alignments: ["left", "center", "right"],
+});
+
 const horizontalRule = HorizontalRule.configure({
   HTMLAttributes: {
     class: cx("mt-4 mb-6 border-t border-muted-foreground"),
@@ -99,9 +105,12 @@ const starterKit = StarterKit.configure({
   },
   codeBlock: {
     HTMLAttributes: {
-      class: cx("rounded-md bg-muted text-muted-foreground border p-5 font-mono font-medium"),
+      class: cx(
+        "rounded-md bg-neutral-500 text-muted-foreground border p-5 font-mono font-medium"
+      ),
     },
   },
+
   code: {
     HTMLAttributes: {
       class: cx("rounded-md bg-muted  px-1.5 py-1 font-mono font-medium"),
@@ -117,8 +126,6 @@ const starterKit = StarterKit.configure({
 });
 
 const codeBlockLowlight = CodeBlockLowlight.configure({
-  // configure lowlight: common /  all / use highlightJS in case there is a need to specify certain language grammars only
-  // common: covers 37 language grammars which should be good enough in most cases
   lowlight: createLowlight(common),
 });
 
@@ -160,6 +167,7 @@ export const defaultExtensions = [
   codeBlockLowlight,
   youtube,
   twitter,
+  textAlign,
   mathematics,
   characterCount,
   TiptapUnderline,

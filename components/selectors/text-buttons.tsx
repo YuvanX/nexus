@@ -1,12 +1,24 @@
 import { cn } from "@/lib/utils";
 import { EditorBubbleItem, useEditor } from "novel";
-import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, CodeIcon } from "lucide-react";
+import {
+  BoldIcon,
+  ItalicIcon,
+  UnderlineIcon,
+  StrikethroughIcon,
+  CodeIcon,
+  AlignLeft,
+  AlignRight,
+  AlignCenter,
+} from "lucide-react";
 import type { SelectorItem } from "./node-selectors";
 import { Button } from "@/components/ui/button";
+
 
 export const TextButtons = () => {
   const { editor } = useEditor();
   if (!editor) return null;
+
+
   const items: SelectorItem[] = [
     {
       name: "bold",
@@ -32,22 +44,37 @@ export const TextButtons = () => {
       command: (editor) => editor.chain().focus().toggleStrike().run(),
       icon: StrikethroughIcon,
     },
+    
     {
-      name: "code",
-      isActive: (editor) => editor.isActive("code"),
-      command: (editor) => editor.chain().focus().toggleCode().run(),
-      icon: CodeIcon,
+      name: 'left-align',
+      isActive: (editor) => editor.isActive({ textAlign: 'left' }),
+      command: (editor) => editor.chain().focus().setTextAlign('left').run(),
+      icon: AlignLeft,
     },
+    {
+      name: 'center-align',
+      isActive: (editor) => editor.isActive({ textAlign: 'center' }),
+      command: (editor) => editor.chain().focus().setTextAlign('center').run(),
+      icon: AlignCenter,
+    },
+    {
+      name: 'right-align',
+      isActive: (editor) => editor.isActive({ textAlign: 'right' }),
+      command: (editor) => editor.chain().focus().setTextAlign('right').run(),
+      icon: AlignRight,
+    },
+     
   ];
   return (
-    <div className='flex'>
+    <div className="flex">
       {items.map((item, index) => (
         <EditorBubbleItem
           key={index}
           onSelect={(editor) => {
             item.command(editor);
-          }}>
-          <Button size='icon' className='rounded-none' variant='ghost'>
+          }}
+        >
+          <Button size="icon" className="rounded-none" variant="ghost">
             <item.icon
               className={cn("h-4 w-4", {
                 "text-blue-500": item.isActive(editor),
