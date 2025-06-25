@@ -1,7 +1,11 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+.tiptap, .ProseMirror {
+  outline: none;
+}
 
 :root {
   --background: oklch(0.9900 0 0);

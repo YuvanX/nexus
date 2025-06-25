@@ -1,4 +1,4 @@
-import {TipTapEditor} from "@/components/tiptap-editor";
+import {Editor } from "@/components/editor/tiptap-editor";
 import { Tools } from "@/components/tools";
 import { db } from "@/db";
 import { notesTable } from "@/db/schema";
@@ -26,7 +26,7 @@ export default async function NotePage({ params: { noteId } }: Props) {
   return (
     <div>
         <div className="px-10">
-            <TipTapEditor/>
+            <Editor/>
         </div>
     </div>
   );
