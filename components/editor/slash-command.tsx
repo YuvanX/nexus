@@ -12,6 +12,7 @@ import {
   TextQuote,
   Twitter,
   Youtube,
+  Highlighter,
 } from "lucide-react";
 import { Command, createSuggestionItems, renderItems } from "novel";
 
@@ -97,6 +98,14 @@ export const suggestionItems = createSuggestionItems([
       editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").toggleBlockquote().run(),
   },
   {
+    title: "Highlight",
+    description: "Highlight the content.",
+    searchTerms: ["highlight"],
+    icon: <Highlighter size={18} />,
+    command: ({ editor, range }) =>
+      editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").toggleHighlight().run(),
+  },
+  {
     title: "Code",
     description: "Capture a code snippet.",
     searchTerms: ["codeblock"],
@@ -128,31 +137,6 @@ export const suggestionItems = createSuggestionItems([
       } else {
         if (videoLink !== null) {
           alert("Please enter a correct Youtube Video Link");
-        }
-      }
-    },
-  },
-  {
-    title: "Twitter",
-    description: "Embed a Tweet.",
-    searchTerms: ["twitter", "embed"],
-    icon: <Twitter size={18} />,
-    command: ({ editor, range }) => {
-      const tweetLink = prompt("Please enter Twitter Link");
-      const tweetRegex = new RegExp(/^https?:\/\/(www\.)?x\.com\/([a-zA-Z0-9_]{1,15})(\/status\/(\d+))?(\/\S*)?$/);
-
-      if (tweetRegex.test(tweetLink!)) {
-        editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .setTweet({
-            src: tweetLink!,
-          })
-          .run();
-      } else {
-        if (tweetLink !== null) {
-          alert("Please enter a correct Twitter Link");
         }
       }
     },

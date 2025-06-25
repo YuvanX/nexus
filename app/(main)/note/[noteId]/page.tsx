@@ -1,4 +1,4 @@
-import {Editor } from "@/components/editor/tiptap-editor";
+import {Editor } from "@/components/editor/editor";
 import { Tools } from "@/components/tools";
 import { db } from "@/db";
 import { notesTable } from "@/db/schema";
