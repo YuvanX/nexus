@@ -33,7 +33,7 @@ export const DashBoardContent = async () => {
           <a
             href={`/note/${note.id}`}
             key={note.id}
-            className="flex flex-col gap-y-5  h-96 w-full text-white bg-neutral-900 rounded-xl "
+            className="flex flex-col gap-y-5 h-96 w-full text-white bg-neutral-900 rounded-xl shadow-[6px_6px_0px_rgba(0,0,0,0.6),12px_12px_0px_rgba(0,0,0,0.3)] transition hover:scale-[1.02] hover:shadow-[8px_8px_0px_rgba(0,0,0,0.3),16px_16px_0px_rgba(0,0,0,0.1)] dark:shadow-[6px_6px_0_rgba(255,255,255,0.2),12px_12px_0_rgba(255,255,255,0.3)] dark:hover:shadow-[8px_8px_0px_rgba(255,255,255,0.3),16px_16px_0px_rgba(255,255,255,0.1)]"
           >
             <div className="w-full h-full relative">
               <Image
