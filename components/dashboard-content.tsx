@@ -18,27 +18,32 @@ export const DashBoardContent = async () => {
     .where(eq(notesTable.userId, user.id));
 
   return (
-    <div className="mx-20 my-20">
+    <div className="md:mx-10 xl:mx-20 my-20">
       <div className="flex items-center flex-col gap-y-5">
-        <div className="text-9xl font-semibold">Hi, Yuvan.</div>
+        <div className="text-5xl xl:text-9xl font-semibold">Hi, Yuvan.</div>
         <CreateNoteDialog />
       </div>
+
       {notes.length === 0 && (
         <div className="text-muted-foreground mx-auto">No notes avaliable</div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-20">
+
+      <div className="gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-20 mx-5">
         {notes.map((note) => (
-          <a href={`/note/${note.id}`}
+          <a
+            href={`/note/${note.id}`}
             key={note.id}
-            className="flex flex-col gap-y-5 min-w-max max-w-xs text-white bg-neutral-900 rounded-xl"
+            className="flex flex-col gap-y-5  h-96 w-full text-white bg-neutral-900 rounded-xl "
           >
-            <Image
-              src={note.image || ""}
-              width={320}
-              height={320}
-              alt={note.name}
-              className="object-cover. rounded-t-xl"
-            />
+            <div className="w-full h-full relative">
+              <Image
+                src={note.image || ""}
+                fill={true}
+                alt={note.name}
+                className="rounded-t-xl object-cover"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
 
             <div className="py-2 px-4 flex items-center justify-between">
               <div>
