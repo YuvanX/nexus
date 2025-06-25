@@ -18,7 +18,7 @@ export const DashBoardContent = async () => {
     .where(eq(notesTable.userId, user.id));
 
   return (
-    <div className="mx-5 md:mx-10 my-30 xl:mx-20">
+    <div className="mx-5 md:mx-10 mt-30 pb-5 xl:mx-20">
       <div className="flex items-center flex-col gap-y-5">
         <div className="text-5xl xl:text-9xl font-semibold">Hi, Yuvan.</div>
         <CreateNoteDialog />

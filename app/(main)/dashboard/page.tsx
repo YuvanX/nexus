@@ -7,7 +7,7 @@ export default async function DashBoardPage() {
   const user = await currentUser();
 
   if (!user) redirect("/signin");
-  return <div className="min-h-screen relative">
+  return <div className="relative">
     <DashBoardContent />
   </div>;
 }

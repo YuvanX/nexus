@@ -81,14 +81,14 @@ export const CreateNoteDialog = () => {
         <DrawerTrigger>
           <InteractiveHoverButton>Create a New Note</InteractiveHoverButton>
         </DrawerTrigger>
-        <DrawerContent className="flex flex-col justify-center">
+        <DrawerContent className="flex flex-col justify-center mx-2">
           <DrawerHeader>
             <DrawerTitle className="text-3xl">New Note</DrawerTitle>
             <DrawerDescription>
               You can create a note by clicking the below button
             </DrawerDescription>
           </DrawerHeader>
-          <form onSubmit={handleSubmit} className="min-w-[400px] mx-auto py-10">
+          <form onSubmit={handleSubmit} className="w-full md:max-w-[400px] mx-auto py-10">
             <Input
               onChange={(e) => setNoteName(e.target.value)}
               placeholder="Name"
