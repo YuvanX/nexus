@@ -103,7 +103,7 @@ export const Tools = ({
               {isSaving ? "Saving" : "Save"}
             </Button>
             <Dialog>
-              <DialogTrigger>
+              <DialogTrigger asChild>
                 <Button className="cursor-pointer" variant="destructive">
                   Delete
                 </Button>

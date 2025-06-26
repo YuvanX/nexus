@@ -9,6 +9,7 @@ import {
   EditorContent,
   EditorRoot,
   handleCommandNavigation,
+  JSONContent,
 } from "novel";
 
 import { defaultExtensions } from "@/lib/extensions";
@@ -34,6 +35,7 @@ export const Editor = ({
   editorState: string;
 }) => {
   const [content, setContent] = useState(editorState || "");
+  // const [jsonContent, setJsonContent] = useState(generateJSON(editorState) ||)
   const [openNode, setOpenNode] = useState(false);
   const [openColor, setOpenColor] = useState(false);
   const [openLink, setOpenLink] = useState(false);
@@ -69,7 +71,7 @@ export const Editor = ({
         <EditorContent
           className="w-full md:max-w-4xl lg:max-w-6xl md:mx-auto mt-30 pb-5 mx-1 relative"
           extensions={extensions}
-          initialContent={content}
+          initialContent={content as unknown as JSONContent}
           onUpdate={({ editor }) => {
             const html = editor.getHTML();
             setContent(html);
