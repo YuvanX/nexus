@@ -22,7 +22,7 @@ export default async function NotePage({ params: { noteId } }: Props) {
       and(eq(notesTable.id, parseInt(noteId)), eq(notesTable.userId, user.id))
     );
 
-  let note = notes[0]
+  const note = notes[0]
 
   return (
     <div>

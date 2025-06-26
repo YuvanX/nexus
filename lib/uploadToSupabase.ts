@@ -8,7 +8,7 @@ export async function uploadToSupabase(buffer: Buffer, fileName: string) {
     process.env.SUPABASE_KEY!
   );
 
-  const { data, error } = await supabase.storage
+  const { error } = await supabase.storage
     .from(process.env.BUCKET_NAME!)
     .upload(fileName, buffer, {
       contentType: "image/png",

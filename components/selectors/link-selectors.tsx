@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useEditor } from "novel";
 import { Check, Trash } from "lucide-react";
-import { type Dispatch, type FC, type SetStateAction, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { Button } from "@/components/ui/button";
 import { PopoverContent } from "@/components/ui/popover";
@@ -11,6 +11,7 @@ export function isValidUrl(url: string) {
     new URL(url);
     return true;
   } catch (e) {
+    console.log(e);
     return false;
   }
 }
@@ -21,6 +22,7 @@ export function getUrlFromString(str: string) {
       return new URL(`https://${str}`).toString();
     }
   } catch (e) {
+    console.log(e);
     return null;
   }
 }

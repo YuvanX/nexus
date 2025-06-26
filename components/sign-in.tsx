@@ -25,6 +25,14 @@ import {
 } from "./ui/input-otp";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
+type ClerkError = {
+  errors: {
+    code: string;
+    message: string;
+    meta?: Record<string, any>;
+  }[];
+};
+
 export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [emailAddressId, setEmailAddressId] = useState<string>("");
@@ -46,11 +54,11 @@ export const SignIn = () => {
   }, [error]);
 
   useEffect(() => {
-    if(success) {
+    if (success) {
       const timer = setTimeout(() => setSuccess(null), 2000);
-      return () => clearTimeout(timer)
+      return () => clearTimeout(timer);
     }
-  }, [success])
+  }, [success]);
 
   if (!isLoaded) return <Loader />;
 
@@ -69,21 +77,17 @@ export const SignIn = () => {
 
       setPendingVerification(true);
       setSuccess("OTP send successfully");
-    } catch (error: any) {
-      if (error.errors[0].code === "form_identifier_not_found") {
+    } catch (error: unknown) {
+      const err = error as ClerkError;
+      if (err.errors[0].code === "form_identifier_not_found") {
         await signUp?.create({ emailAddress: email });
         await signUp?.prepareEmailAddressVerification({
           strategy: "email_code",
         });
 
-        // const primaryEmail = signUp?.emailAddresses?.[0];
-        // if (primaryEmail.id) {
-        //   setEmailAddressId(primaryEmail.id);
-        // }
-
         setPendingVerification(true);
         setSuccess("OTP send successfully");
-      } else if (error.errors[0].code === "form_param_format_invalid") {
+      } else if (err.errors[0].code === "form_param_format_invalid") {
         setError("Invalid Email format. Please enter a valid one.");
         return;
       } else {
@@ -113,11 +117,12 @@ export const SignIn = () => {
         await setSignUpActive!({ session: result.createdSessionId });
         router.push("/dashboard");
       }
-    } catch (error: any) {
-      if (error.errors[0].code === "form_code_incorrect") {
+    } catch (error: unknown) {
+      const err = error as ClerkError;
+      if (err.errors[0].code === "form_code_incorrect") {
         setError("Invalid OTP entered. Please enter correct OTP");
         return;
-      } else if (error.errors[0] === "form_param_invalid_length") {
+      } else if (err.errors[0].code === "form_param_invalid_length") {
         setError("Invalid OTP length. OTP is 6-digit code");
         return;
       } else {
@@ -196,7 +201,8 @@ export const SignIn = () => {
     <>
       <AnimatePresence>
         {!pendingVerification ? (
-          <motion.div className="w-full mx-4 max-w-md"
+          <motion.div
+            className="w-full mx-4 max-w-md"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
@@ -213,7 +219,8 @@ export const SignIn = () => {
                   welcome to nexus&#33;
                 </CardTitle>
                 <CardDescription className="text-muted-foreground text-center text-xs lg:text-sm">
-                  Organize your thoughts&#44; ideas&#44; and work—all in one place&#46;
+                  Organize your thoughts&#44; ideas&#44; and work—all in one
+                  place&#46;
                 </CardDescription>
               </CardHeader>
 
@@ -296,10 +303,7 @@ export const SignIn = () => {
                   </InputOTPGroup>
                 </InputOTP>
 
-                <Button
-                  onClick={handleVerify}
-                  className="w-full mt-4 "
-                >
+                <Button onClick={handleVerify} className="w-full mt-4 ">
                   Verify
                 </Button>
 
@@ -326,7 +330,7 @@ export const SignIn = () => {
             exit={{ opacity: 0, y: 20 }}
             className="absolute bottom-5 right-5 min-w-96"
           >
-            <Alert variant='destructive'>
+            <Alert variant="destructive">
               <AlertCircleIcon />
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
