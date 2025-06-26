@@ -171,7 +171,7 @@ export const SignIn = () => {
       await signIn?.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: "/dashboard",
-        redirectUrlComplete: "/dashbaord",
+        redirectUrlComplete: "/dashboard",
       });
     } catch (error) {
       setError("Enable login via Google");

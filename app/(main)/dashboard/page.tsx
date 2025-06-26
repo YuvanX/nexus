@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 export default async function DashBoardPage() {
   const user = await currentUser();
 
-  if (!user) redirect("/signin");
+  if (!user) redirect("/");
   return <div className="relative">
     <DashBoardContent />
   </div>;
