@@ -217,7 +217,7 @@ export const SignIn = () => {
             <Card className="px-2  py-5 md:px-4 md:py-10">
               <CardHeader>
                 <div className="flex justify-center items-center gap-x-2 mb-2">
-                  <ArrowLeft size={20} className="text-[#4caf4f]" />
+                  <ArrowLeft onClick={() => router.back()} size={20} className="text-[#4caf4f]" />
                   <div className="w-2 h-2 rounded-full bg-[#4caf4f]"></div>
                 </div>
 
@@ -334,7 +334,7 @@ export const SignIn = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-5 right-5 min-w-96"
+            className="absolute  bottom-5 md:right-5 min-w-96"
           >
             <Alert variant="destructive">
               <AlertCircleIcon />
@@ -348,7 +348,7 @@ export const SignIn = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-5 right-5 min-w-96"
+            className="absolute bottom-5 md:right-5 min-w-96"
           >
             <Alert variant="default">
               <AlertCircleIcon />

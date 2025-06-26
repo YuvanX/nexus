@@ -81,7 +81,7 @@ export const CreateNoteDialog = () => {
         <DrawerTrigger asChild>
           <InteractiveHoverButton>Create a New Note</InteractiveHoverButton>
         </DrawerTrigger>
-        <DrawerContent className="flex flex-col justify-center mx-2">
+        <DrawerContent className="flex flex-col justify-center px-2">
           <DrawerHeader>
             <DrawerTitle className="text-3xl">New Note</DrawerTitle>
             <DrawerDescription>
@@ -113,7 +113,7 @@ export const CreateNoteDialog = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute bottom-50 right-5 z-[100] min-w-96"
+            className="absolute top-20 md:top-auto md:bottom-20 md:right-5 z-[100] min-w-96"
           >
             <Alert variant="destructive">
               <AlertCircleIcon />
@@ -127,7 +127,7 @@ export const CreateNoteDialog = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute bottom-50 right-5 z-[100] min-w-96"
+            className="absolute top-20 md:top-auto md:bottom-20 md:right-5 z-[100] min-w-96"
           >
             <Alert variant="default">
               <AlertCircleIcon />
