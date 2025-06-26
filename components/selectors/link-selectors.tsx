@@ -35,7 +35,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { editor } = useEditor();
 
-  // Autofocus on input by default
+ 
   useEffect(() => {
     inputRef.current && inputRef.current?.focus();
   });
@@ -61,7 +61,9 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
             e.preventDefault();
             const input = target[0] as HTMLInputElement;
             const url = getUrlFromString(input.value);
-            url && editor.chain().focus().setLink({ href: url }).run();
+            if(url) {
+              editor.chain().focus().setLink({ href: url }).run()
+            };
           }}
           className='flex  p-1 '>
           <input

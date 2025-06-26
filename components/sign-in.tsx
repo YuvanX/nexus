@@ -29,7 +29,6 @@ type ClerkError = {
   errors: {
     code: string;
     message: string;
-    meta?: Record<string, any>;
   }[];
 };
 
@@ -166,7 +165,10 @@ export const SignIn = () => {
           return prev - 1;
         });
       }, 1000);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      
+    }
   }
 
   async function handleGoogleLogin(e: React.FormEvent) {
@@ -180,6 +182,8 @@ export const SignIn = () => {
       });
     } catch (error) {
       setError("Enable login via Google");
+      console.log(error);
+      
     }
   }
 
@@ -194,6 +198,8 @@ export const SignIn = () => {
       });
     } catch (error) {
       setError("Enable to login via Github");
+      console.log(error);
+      
     }
   }
 
