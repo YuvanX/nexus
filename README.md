@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nexus
 
-## Getting Started
+![Nexus Screenshot](./public/nexus.png)
 
-First, run the development server:
+**Nexus** is a modern note-taking application that leverages AI to generate relevant thumbnails for each note, helping users visually organize their ideas. Designed with performance and simplicity in mind, it provides a focused writing experience with a clean interface and seamless user authentication.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Framework & Libraries
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js** – Full-stack React framework for building scalable web applications.
+- **Clerk** – User authentication and session management.
+- **Motion** – Smooth transitions and animations throughout the UI.
+- **ShadCN/UI** – Accessible, customizable components built with Tailwind CSS.
 
-## Learn More
+### Backend & Storage
 
-To learn more about Next.js, take a look at the following resources:
+- **Drizzle ORM** – Type-safe, SQL-first ORM for managing database operations.
+- **Neon** – Serverless PostgreSQL database hosting with excellent DX.
+- **Supabase** – Cloud storage solution for handling image uploads (e.g., AI-generated thumbnails).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
