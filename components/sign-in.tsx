@@ -39,6 +39,8 @@ export const SignIn = () => {
   const [verificationCode, setVerificationCode] = useState("");
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [loading, setIsLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(false);
   const [resendCountDown, setResetCountDown] = useState(0);
   const { isLoaded, signIn, setActive: setSignInActive } = useSignIn();
@@ -63,27 +65,29 @@ export const SignIn = () => {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    
 
     try {
+      setIsLoading(true)
       await signIn?.create({ identifier: email, strategy: "email_code" });
-
       const factor = signIn?.supportedFirstFactors?.find(
         (f) => f.strategy === "email_code"
       );
       if (factor && "emailAddressId" in factor) {
         setEmailAddressId(factor.emailAddressId);
       }
-
+      
       setPendingVerification(true);
       setSuccess("OTP send successfully");
     } catch (error: unknown) {
       const err = error as ClerkError;
+      setIsLoading(true)
       if (err.errors[0].code === "form_identifier_not_found") {
         await signUp?.create({ emailAddress: email });
         await signUp?.prepareEmailAddressVerification({
           strategy: "email_code",
         });
-
+        
         setPendingVerification(true);
         setSuccess("OTP send successfully");
       } else if (err.errors[0].code === "form_param_format_invalid") {
@@ -93,12 +97,14 @@ export const SignIn = () => {
         setError("Something went wrong. Please try again later");
         return;
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
   async function handleVerify(e: React.FormEvent) {
     e.preventDefault();
-
+    setIsVerifying(true)
     try {
       if (signIn?.status === "needs_first_factor") {
         const result = await signIn.attemptFirstFactor({
@@ -107,6 +113,7 @@ export const SignIn = () => {
         });
 
         await setSignInActive!({ session: result.createdSessionId });
+        setIsVerifying(false)
         router.push("/dashboard");
       } else if (signUp?.status === "missing_requirements") {
         const result = await signUp.attemptEmailAddressVerification({
@@ -114,9 +121,11 @@ export const SignIn = () => {
         });
 
         await setSignUpActive!({ session: result.createdSessionId });
+        setIsVerifying(false)
         router.push("/dashboard");
       }
     } catch (error: unknown) {
+      setIsVerifying(false)
       const err = error as ClerkError;
       if (err.errors[0].code === "form_code_incorrect") {
         setError("Invalid OTP entered. Please enter correct OTP");
@@ -244,7 +253,7 @@ export const SignIn = () => {
                   onClick={handleSubmit}
                   className="w-full font-medium text-sm mt-4 cursor-pointer "
                 >
-                  Login
+                  {loading ? <Loader /> : "Login"}
                 </Button>
 
                 <div className="relative">
@@ -284,9 +293,9 @@ export const SignIn = () => {
             transition={{ duration: 0.3 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            <Card className="min-w-lg">
+            <Card className="w-full md:min-w-lg">
               <CardHeader className="text-center">
-                <CardTitle className="text-3xl">Verify your Identity</CardTitle>
+                <CardTitle className="text-2xl md:text-3xl whitespace-nowrap">Verify your Identity</CardTitle>
                 <CardDescription className="text-muted-foreground text-sm">{`An OTP has been sent your email ${email}`}</CardDescription>
               </CardHeader>
 
@@ -310,7 +319,7 @@ export const SignIn = () => {
                 </InputOTP>
 
                 <Button onClick={handleVerify} className="w-full mt-4 ">
-                  Verify
+                  {isVerifying ? <Loader /> : "Verify"}
                 </Button>
 
                 <Button
