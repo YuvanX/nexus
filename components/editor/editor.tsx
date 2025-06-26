@@ -37,7 +37,7 @@ export const Editor = ({
   const [openNode, setOpenNode] = useState(false);
   const [openColor, setOpenColor] = useState(false);
   const [openLink, setOpenLink] = useState(false);
-  const debouncedValue = useDebounce(content, 500);
+  const debouncedValue = useDebounce(content, 800);
 
   const saveNote = useMutation({
     mutationFn: async () => {
@@ -67,7 +67,7 @@ export const Editor = ({
     <>
       <EditorRoot>
         <EditorContent
-          className="max-w-6xl mx-auto my-20 max-h-[70vh]"
+          className="w-full md:max-w-4xl lg:max-w-6xl md:mx-auto mt-30 pb-5 mx-1 relative"
           extensions={extensions}
           initialContent={content}
           onUpdate={({ editor }) => {
@@ -118,7 +118,7 @@ export const Editor = ({
           </EditorBubble>
         </EditorContent>
       </EditorRoot>
-      <Tools noteName={noteName} username={username || "Yuvan"} isSaving={saveNote.isPending}/>
+      <Tools noteId={noteId} noteName={noteName} username={username || "Yuvan"} isSaving={saveNote.isPending}/>
     </>
   );
 };

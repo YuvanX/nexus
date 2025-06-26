@@ -317,9 +317,9 @@ export const SignIn = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-5 right-5"
+            className="absolute bottom-5 right-5 min-w-96"
           >
-            <Alert variant="default">
+            <Alert variant='destructive'>
               <AlertCircleIcon />
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{error}</AlertDescription>

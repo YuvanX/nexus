@@ -1,5 +1,4 @@
-import {Editor } from "@/components/editor/editor";
-import { Tools } from "@/components/tools";
+import { Editor } from "@/components/editor/editor";
 import { db } from "@/db";
 import { notesTable } from "@/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
@@ -27,8 +26,8 @@ export default async function NotePage({ params: { noteId } }: Props) {
 
   return (
     <div>
-        <div className="px-10">
-            <Editor noteId={parseInt(noteId)} noteName={note.name} username={user.username || "Yuvan"} editorState={note.editorState}/>
+        <div className="px-10 relative">
+            <Editor noteId={parseInt(noteId)} noteName={note.name} username={user.username || "Yuvan"} editorState={note.editorState!}/>
         </div>
     </div>
   );

@@ -127,7 +127,7 @@ export const CreateNoteDialog = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute bottom-50 right-5 z-[100 min-w-96"
+            className="absolute bottom-50 right-5 z-[100] min-w-96"
           >
             <Alert variant="default">
               <AlertCircleIcon />
