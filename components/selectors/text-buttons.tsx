@@ -5,7 +5,6 @@ import {
   ItalicIcon,
   UnderlineIcon,
   StrikethroughIcon,
-  CodeIcon,
   AlignLeft,
   AlignRight,
   AlignCenter,

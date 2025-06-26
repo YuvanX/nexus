@@ -20,12 +20,12 @@ export const DashBoardContent = async () => {
   return (
     <div className="mx-5 md:mx-10 mt-30 pb-5 xl:mx-20">
       <div className="flex items-center flex-col gap-y-5">
-        <div className="text-5xl xl:text-9xl font-semibold">Hi, Yuvan.</div>
+        <div className="text-5xl xl:text-9xl font-semibold">Hi&#44; Yuvan&#46;</div>
         <CreateNoteDialog />
       </div>
 
       {notes.length === 0 && (
-        <div className="text-muted-foreground mx-auto">No notes avaliable</div>
+        <div className="text-muted-foreground text-center mt-5">No notes avaliable</div>
       )}
 
       <div className="gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-20 mx-5">

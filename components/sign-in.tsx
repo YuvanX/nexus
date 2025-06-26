@@ -210,10 +210,10 @@ export const SignIn = () => {
                 </div>
 
                 <CardTitle className="uppercase text-xl md:text-3xl text-center tracking-tighter">
-                  welcome to nexus!
+                  welcome to nexus&#33;
                 </CardTitle>
                 <CardDescription className="text-muted-foreground text-center text-xs lg:text-sm">
-                  Organize your thoughts, ideas, and work—all in one place.
+                  Organize your thoughts&#44; ideas&#44; and work—all in one place&#46;
                 </CardDescription>
               </CardHeader>
 
@@ -261,7 +261,7 @@ export const SignIn = () => {
               </CardContent>
             </Card>
             <div className="text-sm mt-5 text-center text-muted-foreground">
-              Secure • Private • Professional
+              Secure &middot; Private &middot; Professional
             </div>
           </motion.div>
         ) : (
@@ -313,7 +313,7 @@ export const SignIn = () => {
               </CardContent>
             </Card>
             <div className="text-sm mt-5 text-center text-muted-foreground">
-              Secure • Private • Professional
+              Secure &middot; Private &middot; Professional
             </div>
           </motion.div>
         )}

@@ -114,8 +114,8 @@ export const Tools = ({
                     Delete Note
                   </DialogTitle>
                   <DialogDescription>
-                    The project will be permanently deleted. This is action is
-                    irreversible and cannot be undone.
+                    The project will be permanently deleted&#46; This is action is
+                    irreversible and cannot be undone&#46;
                   </DialogDescription>
                 </DialogHeader>
 

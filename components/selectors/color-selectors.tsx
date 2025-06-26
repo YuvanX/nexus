@@ -9,10 +9,10 @@ export interface BubbleColorMenuItem {
   color: string;
 }
 
-interface ColorSelectorProps {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}
+// interface ColorSelectorProps {
+//   isOpen: boolean;
+//   setIsOpen: Dispatch<SetStateAction<boolean>>;
+// }
 
 const TEXT_COLORS: BubbleColorMenuItem[] = [
   {
@@ -95,6 +95,7 @@ const HIGHLIGHT_COLORS: BubbleColorMenuItem[] = [
 interface ColorSelectorProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  
 }
 
 export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
