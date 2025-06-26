@@ -1,4 +1,4 @@
-import { GoogleGenAI, Modality } from "@google/genai";
+import { Content, GenerateContentResponse, GoogleGenAI, Modality } from "@google/genai";
 import { uploadToSupabase } from "./uploadToSupabase";
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 
@@ -20,17 +20,26 @@ export async function generateImagePrompt(name: string) {
 export async function generateImage(prompt: string, name: string) {
   try {
     let imageUrl;
-    const response = await ai.models.generateContent({
+    const response: GenerateContentResponse = await ai.models.generateContent({
       model: "gemini-2.0-flash-preview-image-generation",
       contents: prompt,
       config: {
         responseModalities: [Modality.TEXT, Modality.IMAGE],
       },
     });
-    for (const part of response.candidates[0].content.parts) {
+
+    if(!response.candidates?.length) {
+     throw new Error("No candidates returned by Gemini API");
+    }
+
+    const candidate = response.candidates[0]
+
+    for (const part of (candidate.content as Content).parts ?? []) {
+
       if (part.text) {
         console.log(part.text);
-      } else if (part.inlineData) {
+      
+      } else if ("inlineData" in part && part.inlineData?.data) {
         const imageData = part.inlineData.data;
         const buffer = Buffer.from(imageData, "base64");
         const fileName = `${name}.png`;
@@ -38,6 +47,7 @@ export async function generateImage(prompt: string, name: string) {
         imageUrl = await uploadToSupabase(buffer, fileName);
       }
     }
+   
     return imageUrl
   } catch (error) {
     console.log(error);
