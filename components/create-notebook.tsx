@@ -78,7 +78,7 @@ export const CreateNoteDialog = () => {
   return (
     <>
       <Drawer>
-        <DrawerTrigger>
+        <DrawerTrigger asChild>
           <InteractiveHoverButton>Create a New Note</InteractiveHoverButton>
         </DrawerTrigger>
         <DrawerContent className="flex flex-col justify-center mx-2">

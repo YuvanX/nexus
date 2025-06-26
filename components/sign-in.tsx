@@ -45,6 +45,13 @@ export const SignIn = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    if(success) {
+      const timer = setTimeout(() => setSuccess(null), 2000);
+      return () => clearTimeout(timer)
+    }
+  }, [success])
+
   if (!isLoaded) return <Loader />;
 
   async function handleSubmit(e: React.FormEvent) {
@@ -69,10 +76,10 @@ export const SignIn = () => {
           strategy: "email_code",
         });
 
-        const primaryEmail = signUp?.emailAddresses?.[0];
-        if (primaryEmail.id) {
-          setEmailAddressId(primaryEmail.id);
-        }
+        // const primaryEmail = signUp?.emailAddresses?.[0];
+        // if (primaryEmail.id) {
+        //   setEmailAddressId(primaryEmail.id);
+        // }
 
         setPendingVerification(true);
         setSuccess("OTP send successfully");
@@ -291,7 +298,7 @@ export const SignIn = () => {
 
                 <Button
                   onClick={handleVerify}
-                  className="w-full mt-4 dark:text-white"
+                  className="w-full mt-4 "
                 >
                   Verify
                 </Button>
@@ -311,7 +318,7 @@ export const SignIn = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <AnimatePresence>
+      <AnimatePresence key={"error_success"}>
         {error && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -331,7 +338,7 @@ export const SignIn = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-5 right-5"
+            className="absolute bottom-5 right-5 min-w-96"
           >
             <Alert variant="default">
               <AlertCircleIcon />
