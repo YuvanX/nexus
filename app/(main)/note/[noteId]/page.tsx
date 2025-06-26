@@ -1,4 +1,5 @@
 import { Editor } from "@/components/editor/editor";
+import { TypingAnimation } from "@/components/magicui/typing-animation";
 import { db } from "@/db";
 import { notesTable } from "@/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
@@ -28,13 +29,18 @@ export default async function NotePage({ params }: Props) {
 
   return (
     <div>
-      <div className="px-10 relative">
+      <div className="hidden md:block px-10 relative">
         <Editor
           noteId={parseInt(noteId)}
           noteName={note.name}
           username={user.username || "Yuvan"}
           editorState={note.editorState!}
         />
+      </div>
+      <div className="block md:hidden">
+        <div className="flex justify-center items-center min-h-screen mx-10 text-center">
+          <TypingAnimation className="text-sm">This page is best viewed on Desktop. Please access it via Desktop</TypingAnimation>
+        </div>
       </div>
     </div>
   );
