@@ -5,12 +5,8 @@ import { currentUser } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
-type Props = {
-  params: {
-    noteId: string;
-  };
-};
-export default async function NotePage({ params: { noteId } }: Props) {
+
+export default async function NotePage({ params: { noteId } }: { params: { noteId: string }}) {
   const user  = await currentUser();
   if (!user) {
     redirect("/signin");
